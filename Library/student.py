@@ -42,7 +42,7 @@ class Student:
         return courses
 
     def returnNumStudents(self):
-        con = sqlite3.connect("incollege.db")
+        con = sqlite3.connect("aeg_reg.db")
         cur = con.cursor()
         res = cur.execute("""SELECT COUNT() FROM students""")
         studentCount = res.fetchone()[0]
