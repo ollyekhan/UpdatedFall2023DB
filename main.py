@@ -71,47 +71,6 @@ def checkUsername(username):
     return True
 
 
-def signup():
-    clearConsole()
-    print("\tSignup Screen")
-    con = sqlite3.connect("incollege.db")
-    cur = con.cursor()
-    res = cur.execute("SELECT COUNT() FROM users")
-    userCount = res.fetchone()[0]
-    print("Number of Users: " + str(userCount))
-
-    if (userCount >= 5):
-        print(
-            "\tAll permitted accounts have been created.\n \tPlease come back later.\n"
-        )
-        return None
-    username = input("Enter Username: ")
-    while (not checkUsername(username)):
-        username = input("Enter Username: ")
-    password = input("Enter Password:")
-    while (not checkPassword(password)):
-        password = input("Enter Password: ")
-    firstname = input("Enter First Name:")
-    while (firstname == None):
-        firstname = input("Enter First Name: ")
-    lastname = input("Enter Last Name:")
-    while (lastname == None):
-        lastname = input("Enter Last Name: ")
-    userType = int(input(
-        "Press 1 for a free standard account\nPress 2 for a ($10/month) Premium account: "))
-    while(userType < 1 or userType > 2):
-        userType = int(input(
-            "Press 1 for a free standard account\nPress 2 for a ($10/month) Premium account: "))
-
-    newUser = User(None)
-    newUser.create(username, password, firstname, lastname, userType)
-    newUser.createDefaultSettings()
-    print("\tAccount Created!\n")
-    userNotification = Notification(newUser.getUserId())
-    userNotification.newMemberJoined(username, str(newUser.getUserId()))
-    main()
-
-
 
 def main():
     clearConsole()

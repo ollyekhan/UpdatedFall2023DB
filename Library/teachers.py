@@ -15,29 +15,11 @@ class TeacherDatabase:
                     dob DATE NOT NULL UNIQUE)'''
         self.conn.execute(query)
 
-    def add_teacher(self, name, department, dob):
-        """Add a new teacher to the database"""
-        query = 'INSERT INTO teachers (name, department, dob) VALUES (?, ?, ?)'
-        self.conn.execute(query, (name, department, dob))
-        self.conn.commit()
-
-    def get_teacher(self, teacher_id):
+    def get_teacher(self, name):
         """Retrieve a teacher's details by their ID"""
         query = 'SELECT * FROM teachers WHERE tid = ?'
-        cursor = self.conn.execute(query, (teacher_id,))
+        cursor = self.conn.execute(query, (name))
         return cursor.fetchone()
-
-    def update_teacher(self, tid, name, department, dob):
-        """Update a teacher's details"""
-        query = 'UPDATE teachers SET name = ?, department = ?, dob = ? WHERE tid = ?'
-        self.conn.execute(query, (name, department, dob, tid))
-        self.conn.commit()
-
-    def delete_teacher(self, teacher_id):
-        """Delete a teacher from the database"""
-        query = 'DELETE FROM teachers WHERE tid = ?'
-        self.conn.execute(query, (teacher_id,))
-        self.conn.commit()
 
     def list_teachers(self):
         """List all teachers"""
