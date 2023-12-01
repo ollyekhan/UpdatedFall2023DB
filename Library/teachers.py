@@ -8,12 +8,15 @@ class Teachers:
     def getTID(self):
         return self.tid
     
-    def get_teacher(self, tid):
-        # """Get a teacher's details by their ID"""
+    def create(self, tid, name, department, dob):
         con = sqlite3.connect(db)
-        query = 'SELECT * FROM teachers WHERE tid = ?'
-        cursor = con.execute(query, (tid))
-        return cursor.fetchone()
+        cur = con.cursor()
+        cur.execute(
+            """INSERT INTO students (tid, name, department, dob) VALUES (?, ?, ?,?)""",
+            (tid, name, department, dob))
+        con.commit()
+        self.UID = cur.lastrowid
+        return self.userId
 
     def list_teachers(self):
         # """List all teachers"""

@@ -13,8 +13,8 @@ class Courses:
         name = name.lower()
         classroom = classroom.lower()
         bldg = bldg.lower()
-        tid = tid.lower()
 
+        
         con = sqlite3.connect(db)
         cur = con.cursor()
         cur.execute(
