@@ -7,7 +7,9 @@ class TeacherDatabase:
         self.create_table()
 
     def create_table(self):
+
         # """Create teachers table if it doesn't exist"""
+
         query = '''CREATE TABLE IF NOT EXISTS teachers (
                     tid INTEGER PRIMARY KEY,
                     name TEXT NOT NULL,
@@ -17,6 +19,7 @@ class TeacherDatabase:
 
     def get_teacher(self, name):
         # """Get a teacher's details by their ID"""
+
         query = 'SELECT * FROM teachers WHERE tid = ?'
         cursor = self.conn.execute(query, (name))
         return cursor.fetchone()
