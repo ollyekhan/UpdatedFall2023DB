@@ -6,7 +6,7 @@ class Student:
     def __init__(self, UID):
         self.UID = UID
 
-    def getUserId(self):
+    def getUId(self):
         return self.UID
 
     def isLoggedIn(self):
@@ -23,11 +23,11 @@ class Student:
         self.userId = cur.lastrowid
         return self.userId
 
-    def findOneByUsername(self, uid):
+    def findOneByUID(self, uid):
         con = sqlite3.connect("aeg_reg.db")
         cur = con.cursor()
         res = cur.execute(
-            """SELECT uid WHERE uid = ? LIMIT 1""",
+            """SELECT uid,user_password WHERE uid = ? LIMIT 1""",
             (uid, ))
         user = res.fetchone()
         return user
@@ -35,7 +35,7 @@ class Student:
     def findCourses(self, uid):
         con = sqlite3.connect("aeg_reg.db")
         cur = con.cursor()
-        res = cur.execute( """ SELECT name FROM courses JOIN registered ON courses.cid = registered.cid JOIN students ON registered.uid = students.uid
+        res = cur.execute( """ SELECT courses.cid,courses.classroom,courses.name,courses.bldg FROM courses JOIN registered ON courses.cid = registered.cid JOIN students ON registered.uid = students.uid
     WHERE students.uid = ?
     """, (uid, ))
         courses = res.fetchall()

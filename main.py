@@ -18,19 +18,12 @@ def optionsScreen(loggedInUser: User):
 
     print("Here are all of your courses: ")
 
-    student_id = loggedInUser.getStudentId()
+    student_id = loggedInUser.getUId()
 
     # Execute the SQL query
-    query = """SELECT c.cid, c.name, c.classroom, c.bldg
-               FROM courses c
-               JOIN student_courses sc ON c.cid = sc.course_id
-               WHERE sc.student_id = ?"""
-    
-    # Assuming you have a database connection `conn`
-    cursor = conn.execute(query, (student_id,))
-    courses = cursor.fetchall()
-
-    for course in courses:
+    courseList = loggedInUser.findCourses(student_id)
+  
+    for course in courseList:
         print(f"Course ID: {course[0]}, Name: {course[1]}, Classroom: {course[2]}, Building: {course[3]}")
 
 
@@ -40,20 +33,20 @@ def login():
     clearConsole()
     print("\n\tLogin Screen")
 
-    username = input("Enter Username: ")
+    uid = input("Enter Username: ")
     password = input("Enter Password: ")
 
     tempUser = Student(None)
-    student = tempUser.findOneByUsername(username)
+    student = tempUser.findOneByUsername(uid)
 
-    if (user == None or user[2] != password):
+    if (student == None or student[2] != password):
         print("\tIncorrect username or password!\n\tPlease try again.\n")
         login()
 
     else:
         print("\tYou have successfully logged in\n")
         clearConsole()
-        loggedInUser = User(user[0])
+        loggedInUser = Student(student[0])
         optionsScreen(loggedInUser)
 
 
