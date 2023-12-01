@@ -1,22 +1,10 @@
 import sqlite3
 import os
-import lib.checkStrUtils as checkStrUtils
-from lib.student import student
-
+from Library.student import Student
 
 
 def clearConsole():
     os.system('clear')
-
-
-def checkIfUsernameIsUniqueInDB(username):
-    con = sqlite3.connect("incollege.db")
-    cur = con.cursor()
-    res = cur.execute(
-        "SELECT user_username FROM users WHERE user_username = ? LIMIT 1",
-        (username, ))
-    user = res.fetchone()
-    return user == None
 
 
 def checkPassword(password):
@@ -38,6 +26,69 @@ def checkPassword(password):
 
     return True
 
+def optionsScreen(loggedInUser: User):
+    clearConsole()
+  
+    job = Job()
+
+    print("\n\tOptions Screen")
+    print("Select an option:")
+    print("\t1: Search for a Job")
+    print("\t2: Find someone you know")
+    print("\t3: Send a message to someone")
+    print("\t4: Learn a new skill")
+    print("\t5: for Useful Links.")
+    print("\t6: for InCollege Important Links.")
+    print("\t7: Show my network")
+    friend = Friend(loggedInUser.getUserId())
+    friendInvites = friend.getInvites()
+    print("\t8: You have", len(friendInvites), "new friend invites")
+    print("\t9: View my profile")
+    message = Message(loggedInUser.getUserId())
+    messageList = message.getMessages()
+    if(len(messageList) > 0):
+        print("\t10: You have messages waiting for you")
+    else:
+        print("\t10: No new messages.")
+
+    deletedJobs = notifications.appliedJobDeleted(loggedInUser.getUserId())
+    job.removeApplication(loggedInUser.getUserId())
+
+    if (deletedJobs):
+        for job in deletedJobs:
+            print("\tA job that you applied for has been deleted: " + str(job))
+    selection = int(input("\t0: Log out\n"))
+    clearConsole()
+    if selection == 1:
+        jobScreenList(loggedInUser)
+    elif selection == 2:
+        findSomeoneScreen(loggedInUser)
+    elif selection == 3:
+        messagingScreen = MessagingScreen(loggedInUser.getUserId())
+        messagingScreen.messageList()
+        optionsScreen(loggedInUser)
+    elif selection == 4:
+        skillsScreen(loggedInUser)
+    elif selection == 5:
+        usefulLinks(loggedInUser)
+    elif selection == 6:
+        InCollegeImportantLinks(loggedInUser)
+    elif selection == 7:
+        showMyNetworkScreen(loggedInUser)
+    elif selection == 8:
+        acceptInvitesScreen(loggedInUser)
+    elif selection == 9:
+        profileScreen = ProfileScreen(loggedInUser)
+        profileScreen.render()
+        optionsScreen(loggedInUser)
+    elif selection == 10:
+        messagingScreen = MessagingScreen(loggedInUser.getUserId())
+        messagingScreen.viewIncomingMessages(messageList)
+        optionsScreen(loggedInUser)
+    elif selection == 11:
+        optionsScreen(loggedInUser)
+    elif selection == 0:
+        main()
 
 def login():
     clearConsole()
@@ -46,12 +97,13 @@ def login():
     username = input("Enter Username: ")
     password = input("Enter Password: ")
 
-    tempUser = User(None)
-    user = tempUser.findOneByUsername(username)
+    tempUser = Student(None)
+    student = tempUser.findOneByUsername(username)
 
     if (user == None or user[2] != password):
         print("\tIncorrect username or password!\n\tPlease try again.\n")
         login()
+
     else:
         print("\tYou have successfully logged in\n")
         clearConsole()
@@ -114,33 +166,11 @@ def signup():
 
 
 def main():
-    clearConsole()
+    
 
-    print(
-        "Press \"1\" to learn more about how InCollege can help you find a career."
-    )
-    print("Press \"2\" to connect with an InCollege user.")
-    print("Press \"3\" to log in using an existing account.")
-    print("Press \"4\" to create a new account.")
-    print("Press \"5\" for Useful Links.")
-    print("Press \"6\" for InCollege Important Links.")
-    loginI = int(input())
-    clearConsole()
-    if loginI == 1:
-        videoScreen()
-    elif loginI == 2:
-        findSomeoneScreen(User(None))
-    elif loginI == 3:
-        login()
-    elif loginI == 4:
-        signup()
-    elif loginI == 5:
-        usefulLinks(0)
-    elif loginI == 6:
-        InCollegeImportantLinks(0)
-    else:
-        print("invalid input")
-
+    print("Press any key to login")
+    input()
+    login()
 
 if __name__ == "__main__":
     main()
