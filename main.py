@@ -1,7 +1,7 @@
 import sqlite3
 import os
 from Library.student import Student
-from Library.teachers import Courses
+from Library.teachers import Teachers
 from Library.courses import Courses
 
 
@@ -13,7 +13,7 @@ def clear_console():
     
 
 def options_screen(loggedInUser: Student):
-    clear_console()
+    #clear_console()
 
     print("Welcome to the USF Course Registration System! ")
     print()
@@ -32,14 +32,14 @@ def options_screen(loggedInUser: Student):
     main()
 
 def login():
-    clear_console()
+    #clear_console()
     print("\n\tLogin Screen")
 
     uid = input("Enter Username: ")
     password = input("Enter Password: ")
 
     tempUser = Student(None)
-    student = tempUser.findOneByUsername(uid)
+    student = tempUser.findOneByUID(uid)
 
     if (student == None or student[2] != password):
         print("\tIncorrect username or password!\n\tPlease try again.\n")

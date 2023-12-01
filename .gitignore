@@ -1,1 +1,7 @@
-aeg.db
+aeg_reg.db
+*/__pycache__
+/node_modules
+/.env
+*.log
+package.json
+package-lock.json
