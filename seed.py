@@ -17,7 +17,7 @@ CREATE TABLE `students` (
 cur.execute("""
 
 CREATE TABLE courses (
-  cid CHAR(9) PRIMARY KEY NOT NULL,
+  cid CHAR(5) PRIMARY KEY NOT NULL,
   name varchar(50) NOT NULL,
   classroom varchar(15) NOT NULL,
   bldg CHAR(3) NOT NULL, 
@@ -29,11 +29,12 @@ CREATE TABLE courses (
 cur.execute("""
 
 CREATE TABLE registered (
-  uid CHAR(9) PRIMARY KEY ,
-  cid CHAR(50) PRIMARY KEY,
-  FOREIGN KEY(uid) REFERENCES students (uid)
-  FOREIGN KEY(cid) REFERENCES teacher (courses) 
-)
+  uid CHAR(9),
+  cid CHAR(5),
+  PRIMARY KEY (uid, cid),
+  FOREIGN KEY (uid) REFERENCES students (uid),
+  FOREIGN KEY (cid) REFERENCES courses (cid)  -- Assuming 'courses' table exists with 'cid' as a primary key
+);
 """)
 # Create `teachers` table
 
