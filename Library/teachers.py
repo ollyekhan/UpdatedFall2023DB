@@ -1,33 +1,25 @@
 import sqlite3
+db = "aeg_reg.db"
 
-class TeacherDatabase:
-    def __init__(self, db_file):
-        # """Initialize db class variables"""
-        self.conn = sqlite3.connect(db_file)
-        self.create_table()
-
-    def create_table(self):
-
-        # """Create teachers table if it doesn't exist"""
-
-        query = '''CREATE TABLE IF NOT EXISTS teachers (
-                    tid INTEGER PRIMARY KEY,
-                    name TEXT NOT NULL,
-                    department TEXT NOT NULL,
-                    dob DATE NOT NULL)'''
-        self.conn.execute(query)
-
-    def get_teacher(self, name):
+class Teachers:
+    def __init__(self, tid):
+       self.tid = tid
+        
+    def getTID(self):
+        return self.tid
+    
+    def get_teacher(self, tid):
         # """Get a teacher's details by their ID"""
-
+        con = sqlite3.connect(db)
         query = 'SELECT * FROM teachers WHERE tid = ?'
-        cursor = self.conn.execute(query, (name))
+        cursor = con.execute(query, (tid))
         return cursor.fetchone()
 
     def list_teachers(self):
         # """List all teachers"""
+        con = sqlite3.connect(db)
         query = 'SELECT * FROM teachers'
-        cursor = self.conn.execute(query)
+        cursor = con.execute(query)
         return cursor.fetchall()
 
     def __del__(self):

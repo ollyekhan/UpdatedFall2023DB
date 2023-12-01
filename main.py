@@ -1,24 +1,26 @@
 import sqlite3
 import os
 from Library.student import Student
+from Library.teachers import Courses
+from Library.courses import Courses
 
 
-def clearConsole():
+def clear_console():
     os.system('clear')
 
 
 # def checkPassword(password):
     
 
-def optionsScreen(loggedInUser: User):
-    clearConsole()
+def options_screen(loggedInUser: Student):
+    clear_console()
 
     print("Welcome to the USF Course Registration System! ")
     print()
 
     print("Here are all of your courses: ")
 
-    student_id = loggedInUser.getUId()
+    student_id = loggedInUser.getUID()
 
     # Execute the SQL query
     courseList = loggedInUser.findCourses(student_id)
@@ -30,7 +32,7 @@ def optionsScreen(loggedInUser: User):
     main()
 
 def login():
-    clearConsole()
+    clear_console()
     print("\n\tLogin Screen")
 
     uid = input("Enter Username: ")
@@ -45,28 +47,23 @@ def login():
 
     else:
         print("\tYou have successfully logged in\n")
-        clearConsole()
         loggedInUser = Student(student[0])
-        optionsScreen(loggedInUser)
+        return loggedInUser
+     
 
-
-def checkUsername(username):
-    if (not checkStrUtils.checkIfStrIsCorrectLength(username, 1, 32)):
-        print(
-            "\tUsername must be between 1 and 32 characters!\n\tPlease try again.\n"
-        )
-        return False
-    if (not checkIfUsernameIsUniqueInDB(username)):
-        print("\tUsername must be unique!\n\tPlease try again.\n")
-        return False
-    return True
-
+def populate_screen():
+    return
 
 def main():
     
-    print("Press any key to login")
-    input()
-    login()
+    print("Press 1 to login")
+    print("anything else to populate")
+    loginI = int(input())
+    if loginI == 1:
+        login()
+    else:
+        populate_screen()
+
 
 if __name__ == "__main__":
     main()

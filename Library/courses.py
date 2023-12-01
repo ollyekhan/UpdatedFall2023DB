@@ -1,11 +1,11 @@
 import sqlite3
-import os
 
+db = "aeg_reg.db"
 class Courses:
     def __init__(self, cid):
         self.cid = cid
 
-    def getCid(self):
+    def getCID(self):
         return self.cid
 
     def create(self, cid, name, classroom, bldg, tid):
@@ -15,7 +15,7 @@ class Courses:
         bldg = bldg.lower()
         tid = tid.lower()
 
-        con = sqlite3.connect("aeg_reg.db")
+        con = sqlite3.connect(db)
         cur = con.cursor()
         cur.execute(
             "INSERT INTO courses (cid, name, classroom, bldg, tid) VALUES (?, ?, ?, ?, ?)",
@@ -26,7 +26,7 @@ class Courses:
         return self.cid
 
     def findByCID(self, cid):
-        con = sqlite3.connect("aeg_reg.db")
+        con = sqlite3.connect(db)
         cur = con.cursor()
         res = cur.execute(
             "SELECT * FROM courses WHERE cid = ? LIMIT 1",
@@ -35,7 +35,7 @@ class Courses:
         return course
 
     def findByName(self, name):
-        con = sqlite3.connect("aeg_reg.db")
+        con = sqlite3.connect(db)
         cur = con.cursor()
         res = cur.execute(
             "SELECT * FROM courses WHERE name = ?",
