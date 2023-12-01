@@ -1,9 +1,7 @@
 import sqlite3
-from lib.Setting import Setting
-from lib.utils.Format import Format
 
 
-class User:
+class Student:
 
     def __init__(self, userId):
         self.userId = userId
