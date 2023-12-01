@@ -1,7 +1,7 @@
 import sqlite3
 import os
 import lib.checkStrUtils as checkStrUtils
-from lib.User import User
+from lib.student import student
 
 
 
