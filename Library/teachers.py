@@ -5,14 +5,16 @@ class Teachers:
     def __init__(self, tid):
        self.tid = tid
         
-    def getTID(self):
+    def get_tid(self):
         return self.tid
     
+    def isLoggedIn(self): #returns false if student is not logged in
+        return self.tid != None
     def create(self, tid, name, department, dob):
         con = sqlite3.connect(db)
         cur = con.cursor()
         cur.execute(
-            """INSERT INTO teachers (tid, name, department, dob) VALUES (?, ?, ?, ?)""",
+            """INSERT INTO students (tid, name, department, dob) VALUES (?, ?, ?,?)""",
             (tid, name, department, dob))
         con.commit()
         self.tid = cur.lastrowid

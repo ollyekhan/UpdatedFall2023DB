@@ -27,21 +27,6 @@ def options_screen_teacher(loggedInUser: Teachers):
   
     for course in courseList:
         print(course)
-    
-    userinput = input("Would you like to (a)dd/(d)rop/(l)og off?: ")
-    register = Registered()
-    if userinput == 'a':
-        cid = input("enter class cid: ")
-        register.addCourse(loggedInUser.uid, cid)
-    elif (userinput.lower() == 'd'):
-        cid = input("enter class cid: ")
-        register.dropCourse(loggedInUser.uid,cid)
-    elif (userinput.lower() == "l"):
-        print("Thanks for trying!")
-        return
-    else:
-        print("invalid input!")
-    log_in_teacher(loggedInUser)
 
 def options_screen(loggedInUser: Student):
     #clear_console()
