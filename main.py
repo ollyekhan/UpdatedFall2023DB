@@ -3,8 +3,9 @@ import os
 from Library.student import Student
 from Library.teachers import Teachers
 from Library.courses import Courses
+from Library.registered import Registered
 
-
+db = "aeg_reg.db"
 def clear_console():
     os.system('clear')
 
@@ -27,9 +28,21 @@ def options_screen(loggedInUser: Student):
   
     for course in courseList:
         print(f"Course ID: {course[0]}, Name: {course[1]}, Classroom: {course[2]}, Building: {course[3]}")
-
-
-    main()
+    
+    userinput = input("Would you like to (a)dd/(d)rop/(l)og off?: ")
+    register = Registered()
+    if userinput == 'a':
+        cid = input("enter class cid: ")
+        register.addCourse(loggedInUser.UID, cid)
+    elif (userinput.lower() == 'd'):
+        cid = input("enter class cid: ")
+        register.dropCourse(loggedInUser.UID,cid)
+    elif (userinput.lower() == "l"):
+        print("Thanks for trying!")
+        return
+    else:
+        print("invalid input!")
+    options_screen(loggedInUser)
 
 def login():
     #clear_console()
@@ -41,14 +54,14 @@ def login():
     tempUser = Student(None)
     student = tempUser.findOneByUID(uid)
 
-    if (student == None or student[2] != password):
+    if (student == None or student[1] != password):
         print("\tIncorrect username or password!\n\tPlease try again.\n")
         login()
 
     else:
         print("\tYou have successfully logged in\n")
         loggedInUser = Student(student[0])
-        return loggedInUser
+        options_screen(loggedInUser)
      
 
 def populate_screen():
@@ -58,7 +71,7 @@ def populate_screen():
 
     print("Press 1 to add student:")
     print("Press 2 to add courses")
-    print("Press 3 to add courses")
+    print("Press 3 to add teachers")
     loginI = int(input())
     if loginI == 1:
         for x in range(5):    
@@ -69,7 +82,8 @@ def populate_screen():
             user_firstname = input("Enter user_firstname: ")
             user_lastname = input("Enter user_lastname: ")
             user_major = input("Enter user_major: ")
-            tempUser.create(uid, user_password, user_firstname, user_lastname, user_major)
+            tid = input("Enter tid ")
+            tempUser.create(uid, user_password, user_firstname, user_lastname, user_major,tid)
 
     elif loginI == 2:
         for x in range(5):    
@@ -93,9 +107,13 @@ def populate_screen():
             
 
 def main():
-    
+    con = sqlite3.connect('database.db')
+    cursor = con.cursor()
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    print(cursor.fetchall())
+
     print("Press 1 to login:")
-    print("Press anything else to populate:")
+    print("Press any other num to populate:")
     loginI = int(input())
     if loginI == 1:
         login()

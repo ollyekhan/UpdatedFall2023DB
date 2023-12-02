@@ -22,7 +22,7 @@ class Student:
             (uid, user_password, user_firstname, user_lastname, user_major,tid))
         con.commit()
         self.UID = cur.lastrowid
-        return self.userId
+        return self.UID
 
     def findOneByUID(self, uid):
         con = sqlite3.connect(db)

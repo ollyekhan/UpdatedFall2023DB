@@ -15,8 +15,8 @@ class Teachers:
             """INSERT INTO students (tid, name, department, dob) VALUES (?, ?, ?,?)""",
             (tid, name, department, dob))
         con.commit()
-        self.UID = cur.lastrowid
-        return self.userId
+        self.tid = cur.lastrowid
+        return self.tid
 
     def list_teachers(self):
         # """List all teachers"""
@@ -24,8 +24,4 @@ class Teachers:
         query = 'SELECT * FROM teachers'
         cursor = con.execute(query)
         return cursor.fetchall()
-
-    def __del__(self):
-        # """Close the database connection when the object is destroyed"""
-        self.conn.close()
 

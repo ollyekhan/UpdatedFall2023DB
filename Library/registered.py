@@ -1,24 +1,22 @@
 import sqlite3
 
 db = "aeg_reg.db"
+class Registered:
+    def addCourse(self, uid,cid):
 
-def addCourse(uid):
-    course = input("Enter CID to add: ")
-    con = sqlite3.connect(db)
-    cur = con.cursor()
-    print(cur.execute("SELECT * FROM courses"))
-    cur.execute(
-        "INSERT INTO registered (cid, uid) VALUES (?, ?)",
-        (course, uid))
-    con.commit()
+        con = sqlite3.connect(db)
+        cur = con.cursor()
+        cur.execute(
+            "INSERT INTO registered (cid, uid) VALUES (?, ?)",
+            (uid,cid ))
+        con.commit()
 
 
-def dropCourse(uid):
-    course = input("Enter CID to drop: ")
-    con = sqlite3.connect(db)
-    cur = con.cursor()
-    print(cur.execute("SELECT * FROM registered"))
-    cur.execute(
-        "DELETE FROM registered WHERE cid = ?",
-        (course))
-    con.commit()
+    def dropCourse(self, uid,cid):
+
+        con = sqlite3.connect(db)
+        cur = con.cursor()
+        cur.execute(
+            "DELETE FROM registered WHERE cid = ? AND uid = ?",
+            (uid,cid))
+        con.commit()
