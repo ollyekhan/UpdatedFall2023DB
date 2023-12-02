@@ -42,3 +42,10 @@ class Courses:
             (name, ))
         course = res.fetchall()
         return course
+    
+    def displayAllCourses():
+        con = sqlite3.connect(db)
+        cur = con.cursor()
+        res = cur.execute("SELECT * FROM courses")
+        course = res.fetchall()
+        return course

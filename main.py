@@ -58,6 +58,10 @@ def options_screen(loggedInUser: Student):
   
     for course in courseList:
         print(course)
+
+    print("Here are all courses offered by the University\n")
+
+    
     
     userinput = input("Would you like to (a)dd/(d)rop/(l)og off?: ")
     register = Registered()
@@ -117,16 +121,14 @@ def populate_screen():
     tempClass = Courses(None)
     tempTeachers = Teachers(None)
 
-    print("\nPress 1 to add student:")
-    print("Press 2 to add courses")
-    print("Press 3 to add teachers")
+    print("\nPress 1 to add student: ")
+    print("Press 2 to add courses: ")
+    print("Press 3 to add teachers: ")
     loginI = int(input())
     if loginI == 1:
         for x in range(5):    
-            uid = int(input("Enter uid "))
-
+            uid = int(input("Enter uid: "))
             user_password = input("Enter user_password: ")
-
             user_firstname = input("Enter user_firstname: ")
             user_lastname = input("Enter user_lastname: ")
             user_major = input("Enter user_major: ")
@@ -135,15 +137,13 @@ def populate_screen():
 
     elif loginI == 2:
         for x in range(5):    
-            cid = int(input("Enter cid "))
-
+            cid = int(input("Enter cid: "))
             name = input("Enter name: ")
-
             classroom = input("Enter classroom: ")
             bldg = input("Enter bldg: ")
             tid = input("Enter tid: ")
-
             tempClass.create(cid, name, classroom, bldg, tid)
+
     elif loginI == 3:
         for x in range(5):    
             tid = int(input("Enter tid "))

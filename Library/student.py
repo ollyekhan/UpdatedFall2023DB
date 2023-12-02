@@ -18,7 +18,7 @@ class Student:
         con = sqlite3.connect(db)
         cur = con.cursor()
         cur.execute(
-            """INSERT INTO students (uid, user_password, user_firstname, user_lastname, user_major, tid) VALUES (?, ?, ?, ?, ?,?)""",
+            """INSERT INTO students (uid, user_password, user_firstname, user_lastname, user_major, tid) VALUES (?, ?, ?, ?, ?, ?)""",
             (uid, user_password, user_firstname, user_lastname, user_major,tid))
         con.commit()
         self.uid = cur.lastrowid
@@ -43,8 +43,7 @@ class Student:
             """, (uid, ))
         courses = res.fetchall()
         return courses
-       
-
+    
     def returnNumStudents(self):
         con = sqlite3.connect(db)
         cur = con.cursor()

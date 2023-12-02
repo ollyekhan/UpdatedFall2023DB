@@ -12,7 +12,7 @@ class Teachers:
         con = sqlite3.connect(db)
         cur = con.cursor()
         cur.execute(
-            """INSERT INTO students (tid, name, department, dob) VALUES (?, ?, ?,?)""",
+            """INSERT INTO teachers (tid, name, department, dob) VALUES (?, ?, ?, ?)""",
             (tid, name, department, dob))
         con.commit()
         self.tid = cur.lastrowid
