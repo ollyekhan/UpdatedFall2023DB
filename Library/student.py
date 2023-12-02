@@ -32,13 +32,21 @@ class Student:
         return user
 
     def findCourses(self, uid):
-        con = sqlite3.connect(db)
+        con = sqlite3.connect(db)  # Replace with your actual database name
         cur = con.cursor()
-        res = cur.execute( """ SELECT courses.cid,courses.classroom,courses.name,courses.bldg 
-                          FROM courses JOIN registered ON courses.cid = registered.cid JOIN students ON registered.uid = students.uid
-                          WHERE students.uid = ?""", (uid, ))
-        courses = res.fetchall()
-        return courses
+        try:
+            res = cur.execute(""" 
+                SELECT courses.cid, courses.classroom, courses.name, courses.bldg 
+                FROM courses 
+                INNER JOIN registered ON cid = cid 
+                JOIN students ON uid = uid
+                WHERE uid = ?
+            """, (uid, ))
+            courses = res.fetchall()
+            return courses
+        except sqlite3.Error as e:
+            print("An error occurred:", e.args[0])
+            return []
 
     def returnNumStudents(self):
         con = sqlite3.connect(db)

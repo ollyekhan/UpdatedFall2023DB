@@ -46,7 +46,7 @@ CREATE TABLE `registered` (
 
 cur.execute("""
 CREATE TABLE `teachers` (
-    `tid` INTEGER PRIMARY KEY,
+    `tid` INTEGER PRIMARY KEY NOT NULL,
     `name` TEXT NOT NULL,
     `department` TEXT NOT NULL,
     `dob` DATE NOT NULL)

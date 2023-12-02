@@ -16,7 +16,7 @@ def clear_console():
 def options_screen(loggedInUser: Student):
     #clear_console()
 
-    print("Welcome to the USF Course Registration System! ")
+    print("\nWelcome to the USF Course Registration System! ")
     print()
 
     print("Here are all of your courses: ")
@@ -27,7 +27,7 @@ def options_screen(loggedInUser: Student):
     courseList = loggedInUser.findCourses(student_id)
   
     for course in courseList:
-        print(f"Course ID: {course[0]}, Name: {course[1]}, Classroom: {course[2]}, Building: {course[3]}")
+        print(course)
     
     userinput = input("Would you like to (a)dd/(d)rop/(l)og off?: ")
     register = Registered()
@@ -69,7 +69,7 @@ def populate_screen():
     tempClass = Courses(None)
     tempTeachers = Teachers(None)
 
-    print("Press 1 to add student:")
+    print("\nPress 1 to add student:")
     print("Press 2 to add courses")
     print("Press 3 to add teachers")
     loginI = int(input())
@@ -103,27 +103,22 @@ def populate_screen():
             department = input("Enter department: ")
             dob = input("Enter dob: ")    
             tempTeachers.create(tid, name, department, dob)
+
 def print_database():
     con = sqlite3.connect(db)
     cur = con.cursor()
 
     # Get the list of all tables in the database
-    cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    cur.execute("\nSELECT name FROM sqlite_master WHERE type='table';")
     tables = cur.fetchall()
 
-    # Iterate through all tables
     for table in tables:
         table_name = table[0]
         print(f"Contents of table {table_name}:")
-        
-        # Fetch all data from each table
         cur.execute(f"SELECT * FROM {table_name};")
         rows = cur.fetchall()
-        
-        # Print each row
         for row in rows:
             print(row)
-
         print("\n")  # Newline for better readability between tables            
 
 def main():
@@ -136,7 +131,6 @@ def main():
         login()
     else:
         populate_screen()
-
 
 if __name__ == "__main__":
     main()
