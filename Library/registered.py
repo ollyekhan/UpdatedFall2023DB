@@ -17,7 +17,7 @@ class Registered:
         con = sqlite3.connect(db)
         cur = con.cursor()
         cur.execute(
-            "DELETE FROM registered WHERE cidR = ? AND uidR = ?",
+            "DELETE FROM registered WHERE uidR = ? AND cidR = ?",
             (uid,cid))
         con.commit()
 

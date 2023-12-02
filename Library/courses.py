@@ -2,7 +2,7 @@ import sqlite3
 
 db = "aeg_reg.db"
 class Courses:
-    def __init__(self, cid):
+    def __init__(self, cid =None):
         self.cid = cid
 
     def getCID(self):
@@ -41,8 +41,8 @@ class Courses:
             (name, ))
         course = res.fetchall()
         return course
-    
-    def displayAllCourses(self):
+    @staticmethod
+    def displayAllCourses():
         con = sqlite3.connect(db)
         cur = con.cursor()
         res = cur.execute("SELECT * FROM courses")

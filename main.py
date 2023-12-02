@@ -18,8 +18,6 @@ def options_screen_teacher(loggedInUser: Teachers):
 
     print("\nWelcome to the USF Course Registration System! ")
     print()
-    print("Here are all of your courses: ")
-
     teacher_id = loggedInUser.get_tid()
 
     # Execute the SQL query
@@ -34,7 +32,7 @@ def options_screen(loggedInUser: Student):
     print("\nWelcome to the USF Course Registration System! ")
     print()
 
-    print("Here are all of your courses: ")
+    print("Here are all of your courses:")
 
     student_id = loggedInUser.get_uid()
 
@@ -44,11 +42,14 @@ def options_screen(loggedInUser: Student):
     for course in courseList:
         print(f"Name: {course[2]}, Classroom: {course[1]}, Building: {course[3]},Course ID: {course[0]} ")
 
-    print("Here are all courses offered by the University\n")
-
+    print("\nHere are all courses offered by the University\n")
+    coursesDisplay = Courses()
+    allCourses = coursesDisplay.displayAllCourses()
+    for course in allCourses:
+        print(f"Courses ID: {course[0]}, Courses Name: {course[1]}, Classroom Held In: {course[2]}, Building: {course[3]}, Teacher teaching it: {course[4]}")
     
     
-    userinput = input("Would you like to (a)dd/(d)rop/(l)og off?: ")
+    userinput = input("\nWould you like to (a)dd/(d)rop/(l)og off?: ")
     register = Registered()
     if userinput == 'a':
         cid = int(input("enter class cid: "))
