@@ -1,10 +1,6 @@
-def checkIfStrIsCorrectLength(str, min, max):
-    if len(str) >= min and len(str) <= max:
-        return True
-    return False
+def pwValidation(str):
+    return checkIfStrContainsUpperChar(str) and checkIfStrContainsDigit(str) and checkIfStrContainsSpecialChar(str)
 
-
-#testable
 def checkIfStrContainsUpperChar(str):
     for char in str:
         if char.isupper():
@@ -12,15 +8,12 @@ def checkIfStrContainsUpperChar(str):
     return False
 
 
-#testable
 def checkIfStrContainsDigit(str):
     for char in str:
         if char.isdigit():
             return True
     return False
 
-
-#testable
 def checkIfStrContainsSpecialChar(str):
     specialChars = ["!", "@", "#", "$", "%", "^", "&", "*", "-", "_"]
     for char in str:

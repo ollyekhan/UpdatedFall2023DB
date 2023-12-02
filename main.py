@@ -4,6 +4,7 @@ from Library.student import Student
 from Library.teachers import Teachers
 from Library.courses import Courses
 from Library.registered import Registered
+import Library.strCheck as strCheck
 
 db = "aeg_reg.db"
 def clear_console():
@@ -17,7 +18,6 @@ def options_screen_teacher(loggedInUser: Teachers):
 
     print("\nWelcome to the USF Course Registration System! ")
     print()
-
     print("Here are all of your courses: ")
 
     teacher_id = loggedInUser.get_tid()
@@ -113,7 +113,10 @@ def populate_screen():
     if loginI == 1:
         for x in range(5):    
             uid = int(input("Enter uid: "))
-            user_password = input("Enter user_password: ")
+            while True:
+                user_password = input("Enter user_password: ")
+                if strCheck.pwValidation(user_password) == True:
+                    break
             user_firstname = input("Enter user_firstname: ")
             user_lastname = input("Enter user_lastname: ")
             user_major = input("Enter user_major: ")
@@ -132,10 +135,14 @@ def populate_screen():
     elif loginI == 3:
         for x in range(5):    
             tid = int(input("Enter tid "))
+            while True:
+                user_password = input("Enter user_password: ")
+                if strCheck.pwValidation(user_password) == True:
+                    break
             name = input("Enter name: ")
             department = input("Enter department: ")
             dob = input("Enter dob: ")    
-            tempTeachers.create(tid, name, department, dob)
+            tempTeachers.create(tid,user_password, name, department, dob)
 
 def print_database():
     con = sqlite3.connect(db)
