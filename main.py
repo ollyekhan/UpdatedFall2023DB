@@ -103,15 +103,32 @@ def populate_screen():
             department = input("Enter department: ")
             dob = input("Enter dob: ")    
             tempTeachers.create(tid, name, department, dob)
+def print_database():
+    con = sqlite3.connect(db)
+    cur = con.cursor()
 
-            
+    # Get the list of all tables in the database
+    cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    tables = cur.fetchall()
+
+    # Iterate through all tables
+    for table in tables:
+        table_name = table[0]
+        print(f"Contents of table {table_name}:")
+        
+        # Fetch all data from each table
+        cur.execute(f"SELECT * FROM {table_name};")
+        rows = cur.fetchall()
+        
+        # Print each row
+        for row in rows:
+            print(row)
+
+        print("\n")  # Newline for better readability between tables            
 
 def main():
-    con = sqlite3.connect('database.db')
-    cursor = con.cursor()
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-    print(cursor.fetchall())
 
+    print_database()
     print("Press 1 to login:")
     print("Press any other num to populate:")
     loginI = int(input())
