@@ -2,7 +2,9 @@ import sqlite3
 con = sqlite3.connect("aeg_reg.db")
 cur = con.cursor()
 # Create `students` table
-
+cur.execute("""
+DROP TABLE IF EXISTS `students`;
+""")
 cur.execute("""
 CREATE TABLE `students` (
   `uid` INTEGER PRIMARY KEY NOT NULL,
@@ -17,7 +19,9 @@ CREATE TABLE `students` (
 )
 """)
 # Create `courses` table
-
+cur.execute("""
+DROP TABLE IF EXISTS `courses`;
+""")
 cur.execute("""
 CREATE TABLE `courses` (
   `cid` INTEGER PRIMARY KEY NOT NULL,
@@ -31,7 +35,9 @@ CREATE TABLE `courses` (
 """)
 
 # Create `registered` table
-
+cur.execute("""
+DROP TABLE IF EXISTS `registered`;
+""")
 cur.execute("""
 
 CREATE TABLE `registered` (
@@ -43,7 +49,9 @@ CREATE TABLE `registered` (
 );
 """)
 # Create `teachers` table
-
+cur.execute("""
+DROP TABLE IF EXISTS `teachers`;
+""")
 cur.execute("""
 CREATE TABLE `teachers` (
     `tid` INTEGER PRIMARY KEY NOT NULL,
