@@ -35,10 +35,10 @@ class Student:
         con = sqlite3.connect(db)  # Replace with your actual database name
         cur = con.cursor()
         res = cur.execute(""" 
-                SELECT courses.cid, classroom, name, bldg, courses.tid 
+                SELECT courses.cid, classroom, courses.name, bldg, tidClass
                 FROM courses 
-                JOIN registered ON courses.cid = registered.cid
-                JOIN students ON registered.uid = students.uid
+                JOIN registered ON courses.cid = cidR
+                JOIN students ON uidR = students.uid
                 WHERE students.uid = ?
             """, (uid, ))
         courses = res.fetchall()

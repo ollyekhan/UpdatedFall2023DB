@@ -9,7 +9,6 @@ class Courses:
         return self.cid
 
     def create(self, cid, name, classroom, bldg, tid):
-        cid = cid.lower()
         name = name.lower()
         classroom = classroom.lower()
         bldg = bldg.lower()
@@ -18,7 +17,7 @@ class Courses:
         con = sqlite3.connect(db)
         cur = con.cursor()
         cur.execute(
-            "INSERT INTO courses (cid, name, classroom, bldg, tid) VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO courses (cid, name, classroom, bldg, tidClass) VALUES (?, ?, ?, ?, ?)",
             (cid, name, classroom, bldg, tid))
         con.commit()
 

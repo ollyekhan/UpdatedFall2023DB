@@ -26,7 +26,7 @@ def options_screen_teacher(loggedInUser: Teachers):
     courseList = loggedInUser.findCourses(teacher_id)
   
     for course in courseList:
-        print(course)
+        print(f"Course Name: {course[2]}")
 
 def options_screen(loggedInUser: Student):
     #clear_console()
@@ -42,7 +42,7 @@ def options_screen(loggedInUser: Student):
     courseList = loggedInUser.findCourses(student_id)
   
     for course in courseList:
-        print(course)
+        print(f"Name: {course[2]}, Classroom: {course[1]}, Building: {course[3]},Course ID: {course[0]} ")
 
     print("Here are all courses offered by the University\n")
 
@@ -51,10 +51,10 @@ def options_screen(loggedInUser: Student):
     userinput = input("Would you like to (a)dd/(d)rop/(l)og off?: ")
     register = Registered()
     if userinput == 'a':
-        cid = input("enter class cid: ")
+        cid = int(input("enter class cid: "))
         register.addCourse(loggedInUser.uid, cid)
     elif (userinput.lower() == 'd'):
-        cid = input("enter class cid: ")
+        cid = int(input("enter class cid: "))
         register.dropCourse(loggedInUser.uid,cid)
     elif (userinput.lower() == "l"):
         print("Thanks for trying!")
@@ -94,7 +94,7 @@ def log_in_teacher():
 
     if (student == None or student[1] != password):
         print("\tIncorrect username or password!\n\tPlease try again.\n")
-        login()
+        log_in_teacher()
 
     else:
         print("\tYou have successfully logged in\n")
@@ -120,7 +120,7 @@ def populate_screen():
             user_firstname = input("Enter user_firstname: ")
             user_lastname = input("Enter user_lastname: ")
             user_major = input("Enter user_major: ")
-            tid = input("Enter tid ")
+            tid = int(input("Enter tid "))
             tempUser.create(uid, user_password, user_firstname, user_lastname, user_major,tid)
 
     elif loginI == 2:
@@ -129,7 +129,7 @@ def populate_screen():
             name = input("Enter name: ")
             classroom = input("Enter classroom: ")
             bldg = input("Enter bldg: ")
-            tid = input("Enter tid: ")
+            tid = int(input("Enter tid: "))
             tempClass.create(cid, name, classroom, bldg, tid)
 
     elif loginI == 3:
@@ -166,12 +166,15 @@ def main():
     print_database()
     print("Press \"1\" to login as a student:")
     print("Press \"2\" to login as a teacher:")
+    print("Press \"9\" to end application:")
     print("Press any other num to populate:")
     loginI = int(input())
     if loginI == 1:
         login()
-    if loginI == 2:
+    elif loginI == 2:
         log_in_teacher()
+    elif loginI == 9:
+        return
     else:
         populate_screen()
 

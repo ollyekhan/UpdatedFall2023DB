@@ -7,7 +7,7 @@ class Registered:
         con = sqlite3.connect(db)
         cur = con.cursor()
         cur.execute(
-            "INSERT INTO registered (cid, uid) VALUES (?, ?)",
+            "INSERT INTO registered (uidR, cidR) VALUES (?, ?)",
             (uid,cid ))
         con.commit()
 
@@ -17,6 +17,14 @@ class Registered:
         con = sqlite3.connect(db)
         cur = con.cursor()
         cur.execute(
-            "DELETE FROM registered WHERE cid = ? AND uid = ?",
+            "DELETE FROM registered WHERE cidR = ? AND uidR = ?",
             (uid,cid))
         con.commit()
+
+    def deleteCourses(self): #every new semester we need to have a clean slate (it WORKS okay)
+
+        con = sqlite3.connect(db)
+        cur = con.cursor()
+        cur.execute(
+            "DELETE FROM registered")
+        con.commit()    

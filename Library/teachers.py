@@ -10,11 +10,11 @@ class Teachers:
     
     def isLoggedIn(self): #returns false if student is not logged in
         return self.tid != None
-    def create(self, tid,password, name, department, dob):
+    def create(self, tid, password, name, department, dob):
         con = sqlite3.connect(db)
         cur = con.cursor()
         cur.execute(
-            """INSERT INTO teachers (tid, name, password, department, dob) VALUES (?, ?,?, ?,?)""",
+            """INSERT INTO teachers (tid, user_password, name, department, dob) VALUES (?, ?,?, ?,?)""",
             (tid,password, name, department, dob))
         con.commit()
         self.tid = cur.lastrowid
