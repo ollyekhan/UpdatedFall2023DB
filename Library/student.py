@@ -5,14 +5,14 @@ db = "aeg_reg.db"
 
 class Student:
 
-    def __init__(self, UID):
-        self.UID = UID
+    def __init__(self, uid):
+        self.uid = uid
 
-    def getUID(self):
-        return self.UID
+    def get_uid(self):
+        return self.uid
 
-    def isLoggedIn(self):
-        return self.UID != None
+    def isLoggedIn(self): #returns false if student is not logged in
+        return self.uid != None
 
     def create(self, uid, user_password, user_firstname, user_lastname, user_major,tid):
         con = sqlite3.connect(db)
@@ -21,10 +21,10 @@ class Student:
             """INSERT INTO students (uid, user_password, user_firstname, user_lastname, user_major, tid) VALUES (?, ?, ?, ?, ?,?)""",
             (uid, user_password, user_firstname, user_lastname, user_major,tid))
         con.commit()
-        self.UID = cur.lastrowid
-        return self.UID
+        self.uid = cur.lastrowid
+        return self.uid
 
-    def findOneByUID(self, uid):
+    def findOneByuid(self, uid):
         con = sqlite3.connect(db)
         cur = con.cursor()
         res = cur.execute("""SELECT uid,user_password FROM students WHERE uid = ? LIMIT 1""",(uid, ))
@@ -34,19 +34,16 @@ class Student:
     def findCourses(self, uid):
         con = sqlite3.connect(db)  # Replace with your actual database name
         cur = con.cursor()
-        try:
-            res = cur.execute(""" 
-                SELECT courses.cid, courses.classroom, courses.name, courses.bldg 
+        res = cur.execute(""" 
+                SELECT courses.cid, classroom, name, bldg, courses.tid 
                 FROM courses 
-                INNER JOIN registered ON cid = cid 
-                JOIN students ON uid = uid
-                WHERE uid = ?
+                JOIN registered ON courses.cid = registered.cid
+                JOIN students ON registered.uid = students.uid
+                WHERE students.uid = ?
             """, (uid, ))
-            courses = res.fetchall()
-            return courses
-        except sqlite3.Error as e:
-            print("An error occurred:", e.args[0])
-            return []
+        courses = res.fetchall()
+        return courses
+       
 
     def returnNumStudents(self):
         con = sqlite3.connect(db)

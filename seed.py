@@ -24,8 +24,8 @@ CREATE TABLE `courses` (
   `name` varchar(50) NOT NULL,
   `classroom` varchar(15) NOT NULL,
   `bldg` CHAR(3) NOT NULL, 
-  `tid` INTEGER NOT NULL,
-  FOREIGN KEY (tid) REFERENCES teachers (tid)
+  `tidClass` INTEGER NOT NULL,
+  FOREIGN KEY (tidClass) REFERENCES teachers (tid)
                      
 )
 """)
@@ -35,11 +35,11 @@ CREATE TABLE `courses` (
 cur.execute("""
 
 CREATE TABLE `registered` (
-  `uid` INTEGER,
-  `cid` INTEGER,
-  PRIMARY KEY (uid, cid),
-  FOREIGN KEY (uid) REFERENCES students (uid),
-  FOREIGN KEY (cid) REFERENCES courses (cid)  -- Assuming 'courses' table exists with 'cid' as a primary key
+  `uidR` INTEGER,
+  `cidR` INTEGER,
+  PRIMARY KEY (uidR, cidR),
+  FOREIGN KEY (uidR) REFERENCES students (uid),
+  FOREIGN KEY (cidR) REFERENCES courses (cid)  -- Assuming 'courses' table exists with 'cid' as a primary key
 );
 """)
 # Create `teachers` table
@@ -47,6 +47,7 @@ CREATE TABLE `registered` (
 cur.execute("""
 CREATE TABLE `teachers` (
     `tid` INTEGER PRIMARY KEY NOT NULL,
+    `user_password` varchar(12) NOT NULL,        
     `name` TEXT NOT NULL,
     `department` TEXT NOT NULL,
     `dob` DATE NOT NULL)

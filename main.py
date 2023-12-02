@@ -12,6 +12,36 @@ def clear_console():
 
 # def checkPassword(password):
     
+def options_screen_teacher(loggedInUser: Teachers):
+    #clear_console()
+
+    print("\nWelcome to the USF Course Registration System! ")
+    print()
+
+    print("Here are all of your courses: ")
+
+    teacher_id = loggedInUser.get_tid()
+
+    # Execute the SQL query
+    courseList = loggedInUser.findCourses(teacher_id)
+  
+    for course in courseList:
+        print(course)
+    
+    userinput = input("Would you like to (a)dd/(d)rop/(l)og off?: ")
+    register = Registered()
+    if userinput == 'a':
+        cid = input("enter class cid: ")
+        register.addCourse(loggedInUser.uid, cid)
+    elif (userinput.lower() == 'd'):
+        cid = input("enter class cid: ")
+        register.dropCourse(loggedInUser.uid,cid)
+    elif (userinput.lower() == "l"):
+        print("Thanks for trying!")
+        return
+    else:
+        print("invalid input!")
+    log_in_teacher(loggedInUser)
 
 def options_screen(loggedInUser: Student):
     #clear_console()
@@ -21,7 +51,7 @@ def options_screen(loggedInUser: Student):
 
     print("Here are all of your courses: ")
 
-    student_id = loggedInUser.getUID()
+    student_id = loggedInUser.get_uid()
 
     # Execute the SQL query
     courseList = loggedInUser.findCourses(student_id)
@@ -33,10 +63,10 @@ def options_screen(loggedInUser: Student):
     register = Registered()
     if userinput == 'a':
         cid = input("enter class cid: ")
-        register.addCourse(loggedInUser.UID, cid)
+        register.addCourse(loggedInUser.uid, cid)
     elif (userinput.lower() == 'd'):
         cid = input("enter class cid: ")
-        register.dropCourse(loggedInUser.UID,cid)
+        register.dropCourse(loggedInUser.uid,cid)
     elif (userinput.lower() == "l"):
         print("Thanks for trying!")
         return
@@ -48,11 +78,11 @@ def login():
     #clear_console()
     print("\n\tLogin Screen")
 
-    uid = input("Enter Username: ")
+    uid = input("Enter uid: ")
     password = input("Enter Password: ")
 
     tempUser = Student(None)
-    student = tempUser.findOneByUID(uid)
+    student = tempUser.findOneByuid(uid)
 
     if (student == None or student[1] != password):
         print("\tIncorrect username or password!\n\tPlease try again.\n")
@@ -62,7 +92,25 @@ def login():
         print("\tYou have successfully logged in\n")
         loggedInUser = Student(student[0])
         options_screen(loggedInUser)
-     
+
+def log_in_teacher():
+    #clear_console()
+    print("\n\tLogin Screen")
+
+    tid = input("Enter TID: ")
+    password = input("Enter Password: ")
+
+    tempUser = Teachers(None)
+    student = tempUser.findOneBytid(tid)
+
+    if (student == None or student[1] != password):
+        print("\tIncorrect username or password!\n\tPlease try again.\n")
+        login()
+
+    else:
+        print("\tYou have successfully logged in\n")
+        loggedInUser = Teachers(student[0])
+        options_screen_teacher(loggedInUser)     
 
 def populate_screen():
     tempUser = Student(None)
@@ -75,7 +123,7 @@ def populate_screen():
     loginI = int(input())
     if loginI == 1:
         for x in range(5):    
-            uid = input("Enter uid ")
+            uid = int(input("Enter uid "))
 
             user_password = input("Enter user_password: ")
 
@@ -87,7 +135,7 @@ def populate_screen():
 
     elif loginI == 2:
         for x in range(5):    
-            cid = input("Enter cid ")
+            cid = int(input("Enter cid "))
 
             name = input("Enter name: ")
 
@@ -98,7 +146,7 @@ def populate_screen():
             tempClass.create(cid, name, classroom, bldg, tid)
     elif loginI == 3:
         for x in range(5):    
-            tid = input("Enter tid ")
+            tid = int(input("Enter tid "))
             name = input("Enter name: ")
             department = input("Enter department: ")
             dob = input("Enter dob: ")    
@@ -119,16 +167,19 @@ def print_database():
         rows = cur.fetchall()
         for row in rows:
             print(row)
-        print("\n")  # Newline for better readability between tables            
+        print("\n")  # Newline for better readability 
 
 def main():
 
     print_database()
-    print("Press 1 to login:")
+    print("Press \"1\" to login as a student:")
+    print("Press \"2\" to login as a teacher:")
     print("Press any other num to populate:")
     loginI = int(input())
     if loginI == 1:
         login()
+    if loginI == 2:
+        log_in_teacher()
     else:
         populate_screen()
 
